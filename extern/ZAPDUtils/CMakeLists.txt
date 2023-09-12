@@ -49,9 +49,14 @@ endif()
 ################################################################################
 # MSVC runtime library
 ################################################################################
-if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+if(("${CMAKE_SYSTEM_NAME}" STREQUAL "Windows" OR "${CMAKE_SYSTEM_NAME}" STREQUAL "WindowsStore") AND NOT MINGW)
 	get_property(MSVC_RUNTIME_LIBRARY_DEFAULT TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY)
-	if("${CMAKE_VS_PLATFORM_NAME}" MATCHES "x64")
+
+	if("${CMAKE_SIZEOF_VOID_P}" STREQUAL "4")
+		string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
+			MultiThreaded
+		)
+	else()
 		string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
 			$<$<CONFIG:Debug>:
 				MultiThreadedDebug
@@ -61,11 +66,8 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 			>
 			$<$<NOT:$<OR:$<CONFIG:Debug>,$<CONFIG:Release>>>:${MSVC_RUNTIME_LIBRARY_DEFAULT}>
 		)
-	elseif("${CMAKE_VS_PLATFORM_NAME}" STREQUAL "Win32")
-		string(CONCAT "MSVC_RUNTIME_LIBRARY_STR"
-			MultiThreaded
-		)
 	endif()
+
 	set_target_properties(${PROJECT_NAME} PROPERTIES MSVC_RUNTIME_LIBRARY ${MSVC_RUNTIME_LIBRARY_STR})
 endif()
 ################################################################################

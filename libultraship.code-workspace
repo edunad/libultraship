@@ -20,7 +20,8 @@
     "cmake.generator": "Ninja",
     "cmake.configureArgs": ["-Wno-dev"],
     "cmake.configureSettings": {
-      "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+      "USE_AUTO_VCPKG": "ON"
     },
     "C_Cpp.codeAnalysis.clangTidy.enabled": true,
     "files.insertFinalNewline": true,

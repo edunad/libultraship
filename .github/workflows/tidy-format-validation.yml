@@ -11,9 +11,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libsdl2-dev libpng-dev libglew-dev ninja-build clang-tidy clang-format-12
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 2
+          submodules: true
       - name: ccache
         uses: hendrikmuhs/ccache-action@v1.2
         with:

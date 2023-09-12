@@ -87,7 +87,7 @@ set(Source_Files__Public__Libultra
     ${CMAKE_CURRENT_SOURCE_DIR}/public/libultra/os.h
     ${CMAKE_CURRENT_SOURCE_DIR}/public/libultra/os.cpp
 )
- 
+
 source_group("public/libultra" FILES ${Source_Files__Public__Libultra})
 
 set(Source_Files__Public__Bridge
@@ -104,7 +104,7 @@ set(Source_Files__Public__Bridge
     ${CMAKE_CURRENT_SOURCE_DIR}/public/bridge/crashhandlerbridge.h
     ${CMAKE_CURRENT_SOURCE_DIR}/public/bridge/crashhandlerbridge.cpp
 )
- 
+
 source_group("public/bridge" FILES ${Source_Files__Public__Bridge})
 target_sources(libultraship PRIVATE ${Source_Files__Public__Libultra} ${Source_Files__Public__Bridge})
 
@@ -329,6 +329,21 @@ endif()
 source_group("graphic" FILES ${Source_Files__Graphic})
 target_sources(libultraship PRIVATE ${Source_Files__Graphic})
 
+#=================== Modding ===================
+
+set(Source_Files__Modding
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Plugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.cpp
+)
+
+source_group("modding" FILES ${Source_Files__Modding})
+target_sources(libultraship PRIVATE ${Source_Files__Modding})
+
 #=================== STB ===================
 
 set(Source_Files__Lib__stb
@@ -363,7 +378,7 @@ endif()
 
 target_link_libraries(libultraship
     PRIVATE StrHash64
-    PUBLIC ZAPDUtils ImGui storm tinyxml2 nlohmann_json::nlohmann_json
+    PUBLIC ZAPDUtils ImGui storm tinyxml2 nlohmann_json::nlohmann_json lua sol2::sol2
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Darwin" OR CMAKE_SYSTEM_NAME STREQUAL "NintendoSwitch")
@@ -398,7 +413,7 @@ endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set_target_properties(${PROJECT_NAME} PROPERTIES
-        XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES 
+        XCODE_ATTRIBUTE_CLANG_ENABLE_OBJC_ARC YES
     )
 endif()
 
