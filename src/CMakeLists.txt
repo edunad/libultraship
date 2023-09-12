@@ -90,6 +90,20 @@ set(Source_Files__Public__Libultra
 
 source_group("public/libultra" FILES ${Source_Files__Public__Libultra})
 
+#=================== Modding ===================
+
+set(Source_Files__Public__Modding
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Plugin.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.cpp
+)
+
+source_group("public/modding" FILES ${Source_Files__Public__Modding})
+
 set(Source_Files__Public__Bridge
     ${CMAKE_CURRENT_SOURCE_DIR}/public/bridge/resourcebridge.h
     ${CMAKE_CURRENT_SOURCE_DIR}/public/bridge/resourcebridge.cpp
@@ -106,7 +120,7 @@ set(Source_Files__Public__Bridge
 )
 
 source_group("public/bridge" FILES ${Source_Files__Public__Bridge})
-target_sources(libultraship PRIVATE ${Source_Files__Public__Libultra} ${Source_Files__Public__Bridge})
+target_sources(libultraship PRIVATE ${Source_Files__Public__Libultra} ${Source_Files__Public__Bridge} ${Source_Files__Public__Modding})
 
 #=================== Debug ===================
 
@@ -328,21 +342,6 @@ endif()
 
 source_group("graphic" FILES ${Source_Files__Graphic})
 target_sources(libultraship PRIVATE ${Source_Files__Graphic})
-
-#=================== Modding ===================
-
-set(Source_Files__Modding
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Plugin.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/LuaUtils.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.cpp
-)
-
-source_group("modding" FILES ${Source_Files__Modding})
-target_sources(libultraship PRIVATE ${Source_Files__Modding})
 
 #=================== STB ===================
 
