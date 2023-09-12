@@ -2,6 +2,7 @@
 
 #include "Mod.h"
 #include "Plugin.h"
+#include "Hooks.h"
 #include <sol/sol.hpp>
 
 namespace LUS {
@@ -18,6 +19,8 @@ class Scripting {
     static std::vector<std::unique_ptr<Plugin>> plugins;
 
   public:
+    static std::unique_ptr<Hooks> hooks;
+
     // EVENTS ----
     static std::function<void()> onRegisterTypes;
     static std::function<void(Mod*)> onRegisterGlobals;

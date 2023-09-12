@@ -1,5 +1,7 @@
 #pragma once
 
+#include "spdlog/spdlog.h"
+
 #include <nlohmann/json.hpp>
 #include <sol/sol.hpp>
 
@@ -15,13 +17,13 @@ class LuaUtils {
             auto ret = func(std::forward<CallbackArgs>(args)...);
             if (!ret.valid()) {
                 sol::error err = ret;
-                // fmt::print("[LUA-ERROR] {}\n", err.what()); // TODO: REPLACE WITH LOG SYSTEM
+                SPDLOG_ERROR("[LUA-ERROR] {}", err.what());
                 return {};
             }
 
             return ret;
         } catch (const std::exception& err) {
-            // fmt::print("[LUA-ERROR] {}\n", err.what()); // TODO: REPLACE WITH LOG SYSTEM
+            SPDLOG_ERROR("[LUA-ERROR] {}", err.what());
             return {};
         }
     }

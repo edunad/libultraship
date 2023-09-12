@@ -1,4 +1,5 @@
 #include "Scripting.h"
+#include "wrappers/HooksWrapper.h"
 #include "spdlog/spdlog.h"
 
 namespace LUS {
@@ -9,6 +10,8 @@ std::vector<std::unique_ptr<Plugin>> Scripting::plugins = {};
 // ----------------
 
 // PUBLIC ----
+std::unique_ptr<Hooks> Scripting::hooks = std::make_unique<Hooks>();
+
 std::function<void()> Scripting::onRegisterTypes = nullptr;
 std::function<void(Mod*)> Scripting::onRegisterGlobals = nullptr;
 std::function<void(Mod*)> Scripting::onLoadExtensions = nullptr;
@@ -62,7 +65,9 @@ void Scripting::LoadTypes() {
         throw std::runtime_error("LUA is not set! Reference got destroyed?");
     }
 
-    // AABBWrapper::registerLua(*_lua);
+    // REGISTER COMMON TYPES ---
+    HooksWrapper::RegisterLua(*lua);
+    // --------------
 
     // Register plugins types ---
     for (auto& p : plugins) {
@@ -179,6 +184,10 @@ void Scripting::LoadGlobals(Mod* mod) {
     env["__mod_folder"] = mod->GetFolder().generic_string();
     env["__mod_id"] = mod->GetId();
     // ---------------------
+
+    // Global types ------------------------------------
+    env["hooks"] = HooksWrapper(hooks.get());
+    // -----------------------
 
     // Register plugins env types ---
     for (auto& p : plugins) {

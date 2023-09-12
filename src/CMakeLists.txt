@@ -339,6 +339,10 @@ set(Source_Files__Modding
     ${CMAKE_CURRENT_SOURCE_DIR}/modding/Scripting.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.h
     ${CMAKE_CURRENT_SOURCE_DIR}/modding/Mod.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Hooks.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/Hooks.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/wrappers/HooksWrapper.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/modding/wrappers/HooksWrapper.cpp
 )
 
 source_group("modding" FILES ${Source_Files__Modding})

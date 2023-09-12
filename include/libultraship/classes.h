@@ -14,6 +14,8 @@
 #include "modding/Mod.h"
 #include "modding/Plugin.h"
 #include "modding/Scripting.h"
+#include "modding/Hooks.h"
+#include "modding/wrappers/HooksWrapper.h"
 #include "config/ConsoleVariable.h"
 #include "config/Config.h"
 #include "window/gui/ConsoleWindow.h"
