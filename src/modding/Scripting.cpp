@@ -70,7 +70,9 @@ void Scripting::LoadTypes() {
     //  -----
 
     // Custom ----
-    onRegisterTypes();
+    if (onRegisterTypes != nullptr) {
+        onRegisterTypes();
+    }
     // ----
 }
 
@@ -98,7 +100,9 @@ void Scripting::LoadLuaExtensions(Mod* mod) {
     //  -----
 
     // Custom ----
-    onLoadExtensions(mod);
+    if (onLoadExtensions != nullptr) {
+        onLoadExtensions(mod);
+    }
     // ----
 }
 
@@ -177,7 +181,9 @@ void Scripting::LoadGlobals(Mod* mod) {
     //  -----
 
     // Custom global env types ---
-    onRegisterGlobals(mod);
+    if (onRegisterGlobals != nullptr) {
+        onRegisterGlobals(mod);
+    }
     // ----
 }
 
