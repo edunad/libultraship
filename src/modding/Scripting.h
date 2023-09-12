@@ -50,8 +50,7 @@ class Scripting {
     template <typename T = Plugin, typename... CallbackArgs> static void RegisterPlugin(CallbackArgs&&... args) {
         auto plugin = std::make_unique<T>(std::forward<CallbackArgs>(args)...);
 
-        /*fmt::print("Registered lua plugin '{}'\n",
-                   LUS::StrUtils::replace(typeid(T).name(), "class LUS::", ""));*/
+        SPDLOG_INFO("Registered lua plugin '{}'", typeid(T).name());
         plugins.push_back(std::move(plugin));
     }
     // -----

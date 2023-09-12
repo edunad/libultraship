@@ -1,4 +1,5 @@
 #include "Scripting.h"
+#include "spdlog/spdlog.h"
 
 namespace LUS {
 // PROTECTED -----
@@ -124,12 +125,17 @@ void Scripting::LoadGlobals(Mod* mod) {
             return;
         }
 
-        // fmt::print("{}\n", fmt::join(prtData, " "));
+        std::string data = "";
+        for (auto& i : prtData) {
+            data.append(i);
+        }
+
+        SPDLOG_INFO("{}", data);
     };
 
     env["printTable"] = [](sol::table table) {
         auto json = LuaUtils::LuaToJsonObject(table);
-        // fmt::print("{}\n", json.dump(1, ' ', false));
+        SPDLOG_INFO("{}", json.dump(1, ' ', false));
     };
 
     env["include"] = [&env, mod](const std::string& path) {
@@ -137,7 +143,7 @@ void Scripting::LoadGlobals(Mod* mod) {
 
         bool loaded = LoadLuaFile(fixedPath, env);
         if (!loaded) {
-            // fmt::print("[RawrBox-Scripting] Failed to load '{}'\n", fixedPath);
+            SPDLOG_WARN("Failed to load '{}'", fixedPath);
         }
 
         // Register file for hot-reloading
@@ -149,22 +155,22 @@ void Scripting::LoadGlobals(Mod* mod) {
 
     // Security ------------------------------------
     env["debug"]["setlocal"] = []() {
-        // fmt::print("[RawrBox-Scripting] 'debug.setlocal' removed due to security reasons\n");
+        SPDLOG_WARN("'debug.setlocal' removed due to security reasons");
         return;
     };
 
     env["debug"]["setupvalue"] = []() {
-        // fmt::print("[RawrBox-Scripting] 'debug.setupvalue' removed due to security reasons\n");
+        SPDLOG_WARN("'debug.setupvalue' removed due to security reasons");
         return;
     };
 
     env["debug"]["upvalueid"] = []() {
-        // fmt::print("[RawrBox-Scripting] 'debug.upvalueid' removed due to security reasons\n");
+        SPDLOG_WARN("'debug.upvalueid' removed due to security reasons");
         return;
     };
 
     env["debug"]["upvaluejoin"] = []() {
-        // fmt::print("[RawrBox-Scripting] 'debug.upvaluejoin' removed due to security reasons\n");
+        SPDLOG_WARN("'debug.upvaluejoin' removed due to security reasons");
         return;
     };
     // --------------
@@ -214,8 +220,7 @@ void Scripting::Load() {
         LoadGlobals(mod.second.get());
 
         if (!mod.second->Load()) {
-            // fmt::print("[RawrBox-Scripting] Failed to load mod '{}'\n", mod.first); // TODO: Replace with
-            // internal logger logger
+            SPDLOG_INFO("Failed to load mod '{}'", mod.first);
         } else {
             // Register file for hot-reloading
             // RegisterLoadedFile(mod.first, mod.second->GetEntryFilePath());
@@ -227,7 +232,7 @@ void Scripting::Load() {
 
 bool Scripting::LoadLuaFile(const std::string& path, const sol::environment& env) {
     if (!std::filesystem::exists(path)) {
-        // fmt::print("[RawrBox-Scripting] Failed to load lua : {}\n", path);  // TODO: Replace with internal logger
+        SPDLOG_WARN("Failed to load lua : {}", path);
         return false;
     }
 
@@ -247,8 +252,7 @@ bool Scripting::LoadLuaFile(const std::string& path, const sol::environment& env
         return true;
     }
 
-    // fmt::print("[RawrBox-Scripting] Failed to load '{}'\n  └── Lua error : {}\n", path, errStr); // TODO: Replace
-    // with internal logger
+    SPDLOG_ERROR("Failed to load '{}'\n  └── Lua error : {}", path, errStr);
     return false;
 }
 
